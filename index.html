@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="ja">
+
+  <head>
+    <script type="text/x-mathjax-config">
+
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+
+    </script>
+
+    <script type="text/javascript" async 
+
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+
+    </script>
+
+  </head>
+
+  <body>
+    <h3>多変数連続型状態空間表現</h3>
+    <p>多変数連続型状態空間表現は次式となります。</p>
+
+    \begin{align}
+    \left\{
+    \begin{array}{@{\,}cl}
+    \dot{\mathbf{x}} ~=& \mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u}\\
+    \mathbf{y} ~=& \mathbf{C}\mathbf{x}
+    \end{array}
+    \right. \label{eq:DiscStateEq}
+    \end{align}
+    
+    <p>ここに、\(\mathbf{x}\)は状態ベクトル(状態空間)、\(\mathbf{y}\)は出力ベクトル、
+      \(\mathbf{A}\)、\(\mathbf{B}\)、\(\mathbf{C}\)は係数行列です。</p>
+    
+    <h3>多変数連続型状態空間表現の導出</h3>
+
+    <p>ここでは一例として、連立微分方程式を下記のように記述します。</p>
+    \begin{align}
+    \left\{
+    \begin{array}{@{\,}cc}
+    \ddot x_1 + a_{11}x_1 + a_{12}x_2&=~u_1\\
+    \ddot x_2 + a_{11}x_1 + a_{12}x_2&=~u_2
+    \end{array}
+    \right. \label{eq:DffEqn1}
+    \end{align}
+
+    <p>式\eqref{eq:DffEqn1}を次式のように書き換えます。</p>
+    \begin{align}
+    \left\{
+    \begin{array}{@{\,}cc}
+    \dot x_1 =&~ \dot x_1\\
+    \dot x_2 =&~ \dot x_2\\
+    \ddot x_1 =&~ - a_{11}x_1 - a_{12}x_2 + u_1\\
+    \ddot x_2 =&~ - a_{11}x_1 - a_{12}x_2 + u_2
+    \end{array}
+    \right. \label{eq:DffEqn2}
+    \end{align}
+
+    <p>ここで、行列とベクトルを次式のように定義します。</p>
+    \begin{align}
+    \mathbf{x}_1=\left[
+    \begin{array}{@{\,}l}
+    x_{1}\\
+    x_{2}
+    \end{array}
+    \right],~~
+    \mathbf{x}_2=\left[
+    \begin{array}{@{\,}l}
+    \dot{x}_{1}\\
+    \dot{x}_{2}
+    \end{array}
+    \right],~~
+    \mathbf{u}=\left[
+    \begin{array}{@{\,}l}
+    u_{1}\\
+    u_{2}
+    \end{array}
+    \right],~~
+    \mathbf{A}_1=\left[
+    \begin{array}{@{\,}cc}
+    a_{11}&a_{12}\\
+    a_{21}&a_{22}
+    \end{array}
+    \right]. \label{eq:MatVec}
+    \end{align}
+
+    <p>式\eqref{eq:MatVec}の行列とベクトルを用いて式\eqref{eq:DffEqn2}を次式のように表現します。</p>
+    \begin{align}
+    \left[
+    \begin{array}{@{\,}l}
+    \dot{\mathbf{x}}_{1}\\
+    \dot{\mathbf{x}}_{2}
+    \end{array}
+    \right]=
+    \left[
+    \begin{array}{@{\,}cc}
+    \mathbf{O}&\mathbf{I}\\
+    -\mathbf{A}_1&\mathbf{O}
+    \end{array}
+    \right]
+    \left[
+    \begin{array}{@{\,}l}
+    \mathbf{x}_{1}\\
+    \mathbf{x}_{2}
+    \end{array}
+    \right]+
+    \left[
+    \begin{array}{@{\,}l}
+    \mathbf{O}\\
+    \mathbf{I}
+    \end{array}
+    \right],~~
+    \mathbf{I}=\left[
+    \begin{array}{@{\,}cc}
+    1 & 0\\
+    0 & 1
+    \end{array}
+    \right],~~
+    \mathbf{O}=\left[
+    \begin{array}{@{\,}cc}
+    0 & 0\\
+    0 & 0
+    \end{array}
+    \right].
+    \end{align}
+
+    <p> 式\eqref{eq:DffEqn1}が\(x_1\)、\(x_2\)として計測される場合、出力\(y_1\)、\(y_2\)は下記となります。</p>
+    \begin{align}
+    y_1=x_1,~~~y_2=x_2.
+    \end{align}    
+
+    <p>状態ベクトル\(\mathbf{x}\)、出力ベクトル\(\mathbf{y}\)、係数行列\(\mathbf{A}\)、\(\mathbf{B}\)、\(\mathbf{C}\)を次式のように定義します。</p>
+    \begin{align}
+    \mathbf{x}=\left[
+    \begin{array}{@{\,}l}
+    \mathbf{x}_{1}\\
+    \mathbf{x}_{2}
+    \end{array}
+    \right],~~
+    \mathbf{y}=\left[
+    \begin{array}{@{\,}l}
+    \mathbf{y}_{1}\\
+    \mathbf{y}_{2}
+    \end{array}
+    \right],~~
+    \mathbf{A}=\left[
+    \begin{array}{@{\,}cc}
+    \mathbf{O}&\mathbf{I}\\
+    -\mathbf{A}_1&\mathbf{O}
+    \end{array}
+    \right],~~
+    \mathbf{B}=\left[
+    \begin{array}{@{\,}l}
+    \mathbf{O}\\
+    \mathbf{I}
+    \end{array}
+    \right],~~
+    \mathbf{C}=
+    \left[
+    \begin{array}{@{\,}cc}
+    \mathbf{O} & \mathbf{I}
+    \end{array}
+    \right].
+    \end{align}
+
+    <p>こうして次式の連続型多変数状態空間表現が得られます。</p>
+    \begin{align}
+    \left\{
+    \begin{array}{@{\,}cl}
+    \dot{\mathbf{x}} ~=& \mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u}\\
+    \mathbf{y} ~=& \mathbf{C}\mathbf{x}
+    \end{array}
+    \right. \label{eq:StateEq}
+    \end{align}
+
+    <p>式\eqref{eq:StateEq}をブロック線図で表現すると下図になります。</p> 
+    
+    <img src="FeedBackBlock.jpg" width=600px>
+
+   <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
+</body>
+
+</html>
