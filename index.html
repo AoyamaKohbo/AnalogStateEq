@@ -18,108 +18,166 @@
   </head>
 
   <body>
-    <h3>離散時間状態方程式</h3>
-    <p>離散時間状態方程式は次式となります。</p>
+    <h3>多変数連続時間状態方程式</h3>
+    <p>多変数連続時間状態方程式は次式となります。</p>
 
-    \begin{align}
-    \left.
-    \begin{array}{@{\,}rl}
-    \mathbf{x}(n+1)=&\mathbf{P}\mathbf{x}(n) + \mathbf{Q}\mathbf{u}(n)\\
-    \mathbf{y}(n)  =&\mathbf{C}\mathbf{x}(n)
-    \end{array}
-    \right\} \label{eq:DiscStateEq}
-    \end{align}
-    
-    <p>ここに、\(\mathbf{x}(n)\)は状態ベクトル、\(\mathbf{y}(n)\)は出力ベクトル、\(\mathbf{P}\)は遷移行列、\(\mathbf{Q}\)は入力係数行列です。</p>
-    
-    <p>式\eqref{eq:DiscStateEq}をブロック線図で表現すると下図になります。
-      このブロック線図では負帰還(ネガティブフィードバック)を表現するために、
-      フィードバックブロックを\(-\mathbf{P}\)としています。
-    </p> 
-    <img src="FeedBackBlock.jpg" width=600px>
-    
-    <h3>離散時間状態方程式の導出</h3>
-
-    <p><a href="https://aoyamakohbo.github.io/AnalogStateEq/">多変数連続時間状態方程式</a>を次式とします。</p>
     \begin{align}
     \left.
     \begin{array}{@{\,}cl}
     \dot{\mathbf{x}} ~=& \mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u}\\
     \mathbf{y} ~=& \mathbf{C}\mathbf{x}
     \end{array}
-    \right\} \label{eq:AnlgStateEq}
+    \right\} \label{eq:DiscStateEq}
+    \end{align}
+    
+    <p>ここに、\(\mathbf{x}\)は状態ベクトル(状態空間)、\(\mathbf{y}\)は出力ベクトル、
+      \(\mathbf{A}\)、\(\mathbf{B}\)、\(\mathbf{C}\)は係数行列です。</p>
+
+    <p>式\eqref{eq:DiscStateEq}をブロック線図で表現すると下図になります。</p> 
+    
+    <img src="FeedBackBlock.jpg" width=600px>
+    
+    <h3>多変数連続時間状態方程式の導出</h3>
+
+    <p>ここでは一例として、連立微分方程式を下記のように記述します。</p>
+    \begin{align}
+    \left.
+    \begin{array}{@{\,}cc}
+    \ddot x_1 + a_{11}x_1 + a_{12}x_2&=~b_1u_1\\
+    \ddot x_2 + a_{11}x_1 + a_{12}x_2&=~b_2u_2
+    \end{array}
+    \right\} \label{eq:DffEqn1}
     \end{align}
 
-    <p>ここで、行列指数関数\(e^{\mathbf{X}}\)を導入します。</p>
+    <p>式\eqref{eq:DffEqn1}を次式のように書き換えます。</p>
     \begin{align}
-    e^{\mathbf{X}} = \sum_{n=0}^{\infty}\frac{1}{n!}\mathbf{X}^n =  \mathbf{I}+\frac{1}{1!}\mathbf{X}+\frac{1}{2!}\mathbf{X}^2++\frac{1}{3!}\mathbf{X}^3+\cdots \label{eq:MatExp}
+    \left.
+    \begin{array}{@{\,}cc}
+    \dot x_1 =&~ \dot x_1\\
+    \dot x_2 =&~ \dot x_2\\
+    \ddot x_1 =&~ - a_{11}x_1 - a_{12}x_2 + b_1u_1\\
+    \ddot x_2 =&~ - a_{11}x_1 - a_{12}x_2 + b_2u_2
+    \end{array}
+    \right\} \label{eq:DffEqn2}
     \end{align}
 
-    指数関数\(e^{x}\)と同様に次式が成立します。
+    <p>ここで、行列とベクトルを次式のように定義します。</p>
     \begin{align}
-    \frac{de^{\mathbf{X}}}{dt} = \dot{\mathbf{X}}e^{\mathbf{X}} \label{eq:DffMatExp}
+    \mathbf{x}_1=\left[
+    \begin{array}{@{\,}l}
+    x_{1}\\
+    x_{2}
+    \end{array}
+    \right],~~
+    \mathbf{u}=\left[
+    \begin{array}{@{\,}l}
+    u_{1}\\
+    u_{2}
+    \end{array}
+    \right],~~
+    \mathbf{A}_1=\left[
+    \begin{array}{@{\,}cc}
+    -a_{11}&-a_{12}\\
+    -a_{21}&-a_{22}
+    \end{array}
+    \right],~~
+    \mathbf{B}_1=\left[
+    \begin{array}{@{\,}cc}
+    b_1 & 0\\
+    0 & b_2
+    \end{array}
+    \right]. \label{eq:MatVec}
     \end{align}
 
-    <p>式\eqref{eq:AnlgStateEq}に\(\mathbf{x}=e^{\mathbf{A}t}\mathbf{c}\)を代入すると次式が得られます。</p>
+    <p>式\eqref{eq:MatVec}の行列とベクトルを用いて式\eqref{eq:DffEqn2}を次式のように表現します。</p>
     \begin{align}
-    e^{\mathbf{A}t}\dot{\mathbf{c}} = \mathbf{B}\mathbf{u} \label{eq:VecEq1}
+    \left[
+    \begin{array}{@{\,}l}
+    \dot{\mathbf{x}}_{1}\\
+    \ddot{\mathbf{x}}_{1}
+    \end{array}
+    \right]=
+    \left[
+    \begin{array}{@{\,}cc}
+    \mathbf{O}&\mathbf{I}\\
+    \mathbf{A}_1&\mathbf{O}
+    \end{array}
+    \right]
+    \left[
+    \begin{array}{@{\,}l}
+    \mathbf{x}_{1}\\
+    \dot{\mathbf{x}}_{1}
+    \end{array}
+    \right]+
+    \left[
+    \begin{array}{@{\,}c}
+    \mathbf{O}\\
+    \mathbf{B}_1
+    \end{array}
+    \right]\mathbf{u},~~
+    \mathbf{I}=\left[
+    \begin{array}{@{\,}cc}
+    1 & 0\\
+    0 & 1
+    \end{array}
+    \right],~~
+    \mathbf{O}=\left[
+    \begin{array}{@{\,}cc}
+    0 & 0\\
+    0 & 0
+    \end{array}
+    \right].
+    \end{align}
+
+    <p> 式\eqref{eq:DffEqn1}が\(x_1\)、\(x_2\)として計測される場合、出力\(y_1\)、\(y_2\)は下記となります。</p>
+    \begin{align}
+    y_1=x_1,~~~y_2=x_2.
     \end{align}    
 
-    <p>式\eqref{eq:VecEq1}の両辺に左側から\(e^{-\mathbf{A}t}\)を乗じて積分すると次式になります。</p>
+    <p>状態ベクトル\(\mathbf{x}\)、出力ベクトル\(\mathbf{y}\)、係数行列\(\mathbf{A}\)、\(\mathbf{B}\)、\(\mathbf{C}\)を次式のように定義します。</p>
     \begin{align}
-    \mathbf{c}(t) = \int_0^t e^{-\mathbf{A}t}\mathbf{u}(\tau)d\tau + \mathbf{d} \label{eq:SysEqn3}
-    \end{align}
-    <p>ここに、\(\mathbf{d}\)は定数ベクトルです。</p>
-
-    <p>式\eqref{eq:SysEqn3}の\(\mathbf{c}(t)\)を\(\mathbf{x}=\mathbf{c}e^{\mathbf{A}t}\)に代入すると\(\mathbf{x}\)は次式となります。</p>
-    \begin{align}
-    \mathbf{x}(t)=\mathbf{d}e^{\mathbf{A}t} + \int_0^t e^{-\mathbf{A}(\tau-t)}\mathbf{u}(\tau)d\tau \label{eq:SysEqn4}
-    \end{align}
-
-    <p>\(t=0\)のとき\(\mathbf{x}=\mathbf{d}=\mathbf{x}(0)\)となるので、式\eqref{eq:SysEqn4}は次式となります。</p>
-    \begin{align}
-    \mathbf{x}(t)=e^{\mathbf{A}t}\mathbf{x}(0) + \int_0^t e^{-\mathbf{A}(\tau-t)}\mathbf{u}(\tau)d\tau \label{eq:SysEqn5}
-    \end{align}
-
-    <p>\(t=nT\)のとき\(\mathbf{x}=\mathbf{x}(nT)\)とすれば式\eqref{eq:SysEqn5}から次式が得られます。</p>
-    \begin{align}
-    \mathbf{x}(nT)=e^{\mathbf{A}nT}\mathbf{x}(0) + \int_0^{nT} e^{-\mathbf{A}(\tau-nT)}\mathbf{u}(\tau)d\tau \label{eq:SysEqn6}
-    \end{align}
-
-    <p>\(t=(n+1)T\)のとき\(\mathbf{x}=\mathbf{x}((n+1)T)\)とすれば式\eqref{eq:SysEqn5}から次式が得られます。</p>
-    \begin{align}
-    \mathbf{x}((n+1)T)=e^{\mathbf{A}(n+1)T}\mathbf{x}(0) + \int_0^{(n+1)T} e^{-\mathbf{A}(\tau-(n+1)T)}\mathbf{u}(\tau)d\tau \label{eq:SysEqn6_2}
-    \end{align}
-
-    <p>式\eqref{eq:SysEqn6}の両辺に\(e^{\mathbf{A}T}\)を乗じて、式\eqref{eq:SysEqn6_2}の両辺から引くと次式が得られます。</p>
-    \begin{align}
-    \mathbf{x}((n+1)T)-e^{\mathbf{A}T}\mathbf{x}(nT) =& \int_0^{(n+1)T} e^{-\mathbf{A}\{-\tau-(n+1)T\}}\mathbf{u}(\tau)d\tau - e^{\mathbf{A}nT}\int_0^{nT} e^{-\mathbf{A}(\tau-nT)}\mathbf{u}(\tau)d\tau \nonumber\\
-    =& \int_0^{(n+1)T} e^{-\mathbf{A}\{-\tau-(n+1)T\}}\mathbf{u}(\tau)d\tau - \int_0^{nT} e^{-\mathbf{A}(\tau-(n+1)T)}\mathbf{u}(\tau)d\tau \nonumber\\
-    =& \int_{nT}^{(n+1)T} e^{-\mathbf{A}\{\tau-(n+1)T\}}\mathbf{u}(\tau)d\tau \label{eq:SysEqn6_1}
-    \end{align}
-
-    <p>\(\tau^\prime=\tau-nT\)に変数変換し、式\eqref{eq:SysEqn6_1}の時間積分区間\([nT,(n+1)T]\)では\(\mathbf{u}(\tau)=\mathbf{u}(nT)\)とすると次式になります。</p>
-    \begin{align}
-    \mathbf{x}((n+1)T)=e^{\mathbf{A}T}\mathbf{x}(nT) + \{\int_0^T e^{-\mathbf{A}(\tau^\prime-T)}\}d\tau^\prime\mathbf{u}(nT) \label{eq:SysEqn7}
-    \end{align}
-
-    <p>
-    式\eqref{eq:SysEqn7}の\(\mathbf{x}(nT)\)、\(\mathbf{u}(nT)\)をそれぞれ\(\mathbf{x}(n)\)、\(\mathbf{u}(n)\)と表記して\(\tau^\prime\)を\(\tau\)に置き換え、
-    </p>
-    \begin{align}
-    \mathbf{P}=e^{-\mathbf{A}T},~~~\mathbf{Q}=\int_0^T e^{-\mathbf{A}(\tau - T)}d\tau=\mathbf{A}^{-1}(e^{\mathbf{A}T}-\mathbf{I})\mathbf{B}
-    \end{align}
-    
-    <p>とおくと、次の離散時間状態方程式が得られます。</p>
-    \begin{align}
-    \left\{
-    \begin{array}{@{\,}rl}
-    \mathbf{x}(n+1)=&\mathbf{P}\mathbf{x}(n) + \mathbf{Q}\mathbf{u}(n)\\
-    \mathbf{y}(n)  =&\mathbf{C}\mathbf{x}(n)
+    \mathbf{x}=\left[
+    \begin{array}{@{\,}l}
+    \mathbf{x}_{1}\\
+    \dot{\mathbf{x}}_{1}
     \end{array}
-    \right. \nonumber
+    \right],~~
+    \mathbf{y}=\left[
+    \begin{array}{@{\,}l}
+    y_{1}\\
+    y_{2}
+    \end{array}
+    \right],~~
+    \mathbf{A}=\left[
+    \begin{array}{@{\,}cc}
+    \mathbf{O}&\mathbf{I}\\
+    \mathbf{A}_1&\mathbf{O}
+    \end{array}
+    \right],~~
+    \mathbf{B}=\left[
+    \begin{array}{@{\,}l}
+    \mathbf{O}\\
+    \mathbf{B}_1
+    \end{array}
+    \right],~~
+    \mathbf{C}=
+    \left[
+    \begin{array}{@{\,}cc}
+    \mathbf{I} & \mathbf{O}
+    \end{array}
+    \right].
     \end{align}
-    
+
+    <p>こうして次式の多変数連続時間状態方程式が得られます。</p>
+    \begin{align}
+    \left.
+    \begin{array}{@{\,}cl}
+    \dot{\mathbf{x}} ~=& \mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u}\\
+    \mathbf{y} ~=& \mathbf{C}\mathbf{x}
+    \end{array}
+    \right\} \label{eq:StateEq}
+    \end{align}
+
    <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
 </body>
 
